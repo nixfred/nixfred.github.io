@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Life – I'm Still Standing</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" href="profile.jpg">
+    <link rel="shortcut icon" href="profile.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #4a9eff;
+            --accent-gold: #ffd700;
+            --accent-soft: #7dd3fc;
+            --border: #333333;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;700&family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.4;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            margin-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            max-width: 65ch;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Header Info */
+        .header-info {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            z-index: 1001;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 4rem;
+        }
+
+        section {
+            min-height: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            position: relative;
+        }
+
+        #hero h1 {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            text-align: center;
+        }
+
+        .hero-text {
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            margin: 0 auto;
+            text-align: center;
+            max-width: 65ch;
+            font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+            line-height: 1.4;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* What This Is Section */
+        .typewriter-container {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--text-primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Daily Practice Accordions */
+        .accordion {
+            margin: 1rem 0;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-header {
+            padding: 0.75rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            color: var(--accent);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+
+        .accordion-indicator {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Memory Book Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .memory-tile {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .memory-tile:hover::before {
+            left: 100%;
+        }
+
+        .memory-tile:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Journal Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease forwards;
+            cursor: pointer;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-entry:hover {
+            border-color: var(--accent);
+            background: rgba(139, 0, 0, 0.05);
+        }
+
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 1.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-entry.collapsed .timeline-content {
+            display: none;
+        }
+
+        .timeline-entry.collapsed {
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-header-left {
+            flex: 1;
+        }
+
+        .expand-indicator {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-entry.collapsed .expand-indicator {
+            transform: rotate(-90deg);
+        }
+
+        .timeline-content {
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .timeline-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        .journal-section {
+            margin: 1.5rem 0;
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .journal-section:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .journal-quote {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-style: italic;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent);
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 1.5rem;
+            letter-spacing: 0.02em;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .journal-dialogue {
+            background: rgba(74, 158, 255, 0.08);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .journal-emphasis {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-soft);
+            margin: 1.5rem 0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .journal-list {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(74, 158, 255, 0.05);
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.1);
+        }
+
+        .journal-separator {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--accent);
+            font-size: 1rem;
+            letter-spacing: 1em;
+            opacity: 0.5;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-tags {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .timeline-preview {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Rules Swiper */
+        .rules-container {
+            position: relative;
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rule-slide {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .rule-slide.active {
+            opacity: 1;
+        }
+
+        .rule-text {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-family: 'Playfair Display', Georgia, serif;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.3;
+        }
+
+        .swipe-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .swipe-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .swipe-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .disclaimer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .theme-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Silent Mode */
+        body.silent-mode {
+            filter: grayscale(100%) contrast(0.8);
+        }
+
+        /* Terminal Theme */
+        body.terminal-mode {
+            font-family: 'Courier New', monospace;
+        }
+
+        body.terminal-mode h1,
+        body.terminal-mode h2,
+        body.terminal-mode h3 {
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        body.terminal-mode .memory-tile,
+        body.terminal-mode .accordion-item,
+        body.terminal-mode .tag {
+            border-style: dashed;
+        }
+
+        /* Responsive - Mobile First */
+        @media (max-width: 768px) {
+            #caregiving > div:nth-child(3) {
+                grid-template-columns: 1fr !important;
+            }
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+            }
+
+            section {
+                padding: 0.75rem;
+                min-height: auto;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .header-info {
+                display: none;
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .memory-tile {
+                padding: 1.5rem;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-entry {
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .journal-quote {
+                font-size: 1.3rem;
+                padding: 1rem;
+                padding-left: 1.5rem;
+            }
+
+            .journal-dialogue {
+                padding: 1rem;
+            }
+
+            .journal-emphasis {
+                font-size: 1.1rem;
+            }
+
+            .journal-list {
+                padding: 1rem;
+            }
+
+            .rule-text {
+                font-size: 1.8rem !important;
+                padding: 0 1rem;
+            }
+
+            .swipe-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .theme-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+
+            .hero-text {
+                font-size: 1.1rem !important;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            /* Fix navigation wrap on mobile */
+            nav ul li:last-child {
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+                border-left: none !important;
+                margin-top: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .journal-section {
+                margin: 1.5rem 0;
+                padding: 1rem 0;
+            }
+
+            .accordion-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .timeline-entry {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#caregiving">Caregiving</a></li>
+            <li><a href="#photos">Photos & Video</a></li>
+            <li><a href="/network" style="border-left: 1px solid var(--border); padding-left: 2rem; margin-left: 1rem;">Network</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Info -->
+    <div class="header-info">
+        <span id="clock"></span>
+        <a href="https://x.com/nixfred" target="_blank" style="color: var(--accent); text-decoration: none; margin-left: 2rem;">@nixfred on X</a>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                <img src="https://pbs.twimg.com/profile_images/1933257848382705664/7PpiC2I9_400x400.jpg" 
+                     alt="Spike" 
+                     style="width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--accent);">
+                <h1 style="margin-bottom: 0;">I'm Still Standing<br><span style="font-size: 0.35em; color: var(--accent-gold); font-weight: 300; letter-spacing: 0.15em;">♪ yeah yeah yeah ♪</span></h1>
+                <p style="font-size: 0.9rem; color: var(--accent); margin-top: 0.5rem; font-style: italic;">Also doing consulting at <a href="https://yourdoingitallwrong.com" target="_blank" style="color: var(--accent); text-decoration: underline;">YoureDoingItAllWrong.com</a> – $800/hr to tell you what's wrong</p>
+            </div>
+            <p class="hero-text">There is a particular kind of silence that comes with watching someone you love disappear one memory at a time.<br><br>This is not a story about heroism or tragedy. This is a ledger of days.<br><br>A personal archive. A field manual. A witness to the daily practice of showing up when showing up is all you have left. No heroes here. No villains either. Just the weight of love measured in laundry loads and medication schedules.</p>
+        </section>
+
+        <!-- Caregiving Section -->
+        <section id="caregiving" class="fade-in">
+            <h2 style="text-align: center;">Caregiving with Alzheimer's</h2>
+            
+            <!-- Pinned Essential Techniques -->
+            <div style="background: rgba(255, 215, 0, 0.05); border: 2px solid var(--accent-gold); padding: 2rem; margin: 2rem 0; border-radius: 8px;">
+                <h3 style="color: var(--accent-gold); margin-bottom: 1rem; text-align: center;">📌 Essential Techniques</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div onclick="showJournal(0)" style="cursor: pointer; padding: 1rem; border: 1px solid var(--border); transition: all 0.3s ease;">
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Connection Not Correction</h4>
+                        <p style="font-size: 0.9rem;">Meet them where they are, not where you wish they were</p>
+                    </div>
+                    <div onclick="showJournal(4)" style="cursor: pointer; padding: 1rem; border: 1px solid var(--border); transition: all 0.3s ease;">
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Night Terror Response</h4>
+                        <p style="font-size: 0.9rem;">When night terrors come, answer the feeling not the question</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <!-- Left Column: Chronological Ledger -->
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Daily Ledger</h3>
+                    <div class="memory-grid" style="grid-template-columns: 1fr;">
+                        <div class="memory-tile" onclick="showJournal(0)">
+                            <h3>Connection Not Correction</h3>
+                            <p>August 7, 2025 - Meet them where they are, not where you wish they were</p>
+                        </div>
+                        <div class="memory-tile" onclick="showJournal(1)">
+                            <h3>Defending Independence</h3>
+                            <p>August 7, 2025 - Simplifying is not babying, it is defending their independence</p>
+                        </div>
+                        <div class="memory-tile" onclick="showJournal(2)">
+                            <h3>I'll Remember For You Dad</h3>
+                            <p>July 13, 2025 - It's not memory loss anymore it's identity collapse</p>
+                        </div>
+                        <div class="memory-tile" onclick="showJournal(3)">
+                            <h3>When Anger Is Actually Grief</h3>
+                            <p>June 17, 2025 - He used to fly planes, build houses, dive off high boards</p>
+                        </div>
+                        <div class="memory-tile" onclick="showJournal(4)">
+                            <h3>Night Terrors</h3>
+                            <p>April 30, 2025 - That memory still owns the night</p>
+                        </div>
+                        <div class="memory-tile">
+                            <h3>The Day He Forgot My Name</h3>
+                            <p>But remembered the dog we had in 1987</p>
+                        </div>
+                        <div class="memory-tile">
+                            <h3>404 Errors in Human Form</h3>
+                            <p>When the neural pathways return "file not found"</p>
+                        </div>
+                        <div class="memory-tile">
+                            <h3>Night Shift</h3>
+                            <p>3 AM is when the real conversations happen</p>
+                        </div>
+                        <div class="memory-tile">
+                            <h3>System Crash</h3>
+                            <p>When Medicare meets reality</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Themes -->
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Themes & Patterns</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="padding: 1rem; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Communication</h4>
+                            <p style="font-size: 0.9rem;">Validate feelings, not logic</p>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Environment</h4>
+                            <p style="font-size: 0.9rem;">Simple, visible, reachable</p>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Identity</h4>
+                            <p style="font-size: 0.9rem;">Remember for them</p>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Night Care</h4>
+                            <p style="font-size: 0.9rem;">The 3 AM reality</p>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Self Care</h4>
+                            <p style="font-size: 0.9rem;">You can't pour from empty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photos & Video -->
+        <section id="photos" class="fade-in">
+            <h2 style="text-align: center;">Photos & Video</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; justify-items: center;">
+                <!-- Instagram Photo 1 -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DJS6ayJss6B/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DJS6ayJss6B/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Instagram Photo 2 -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DHwr80os7KM/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DHwr80os7KM/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Instagram Video Embed -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DFtO7w2RrAp/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DFtO7w2RrAp/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Instagram Photo 4 -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DJS5CiPNkZF/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DJS5CiPNkZF/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Instagram Video 5 -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DKSvTYTRx-m/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DKSvTYTRx-m/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Night Terrors Image -->
+                <div style="text-align: center;">
+                    <img src="https://pbs.twimg.com/media/Gp0zu5SXoAAQEdr?format=png&name=medium" 
+                         alt="Night terrors memory" 
+                         style="max-width: 100%; height: auto; border-radius: 8px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);"/>
+                </div>
+                
+                <!-- New Instagram Post -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DHE8EitMrjD/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DHE8EitMrjD/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+                
+                <!-- Another Instagram Post -->
+                <div style="text-align: center;">
+                    <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DH6-NTWMncB/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:100%; min-width:200px; padding:0; width:100%;">
+                        <div style="padding:16px;">
+                            <a href="https://www.instagram.com/p/DH6-NTWMncB/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                        </div>
+                    </blockquote>
+                </div>
+            </div>
+            
+            
+            <style>
+                @media (max-width: 768px) {
+                    #photos > div {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            </style>
+        </section>
+
+        <!-- Journal Section (Hidden) -->
+        <section id="journal" class="fade-in" style="display: none;">
+            <h2>Dad Alzheimer's Updates</h2>
+            <div class="timeline">
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">August 7, 2025</div>
+                            <h3>Connection Not Correction</h3>
+                            <p class="timeline-preview">Alzheimer's care is about connection, not correction...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="journal-section">
+                            <p style="font-weight: bold; font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent-gold);">Takeaway: Familiar routines anchor better than logic. Meet them where they are, not where you wish they were.</p>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">Alzheimer's care is about connection, not correction. Familiar sights, sounds, and routines can anchor a person more than logic ever will. Meet them where they are, not where you wish they were.</p>
+                            <div style="text-align: center; margin: 2rem 0;">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DKSvTYTRx-m/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#000; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px auto; max-width:540px; min-width:200px; padding:0; width:100%;">
+                                    <div style="padding:16px;">
+                                        <a href="https://www.instagram.com/p/DKSvTYTRx-m/?utm_source=ig_embed&amp;utm_campaign=loading" style="color:#c9c8cd; text-decoration:none;" target="_blank">View this post on Instagram</a>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <button onclick="navigateJournal(-1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">← Previous</button>
+                            <button onclick="navigateJournal(1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">Next →</button>
+                        </div>
+                        
+                        <div class="timeline-tags">
+                            <span class="tag">Alzheimer's</span>
+                            <span class="tag">Dad</span>
+                            <span class="tag">Caregiving</span>
+                            <span class="tag">Connection</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">August 7, 2025</div>
+                            <h3>Defending Independence</h3>
+                            <p class="timeline-preview">Choices are empowering, but too many choices overwhelm...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="journal-section">
+                            <p style="font-weight: bold; font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent-gold);">Takeaway: Simplify choices to 2-3 visible options. Everything accessible, nothing hidden.</p>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">Choices are empowering, but too many choices overwhelm.</p>
+                            <p>I set up a table in the hallway outside Dad's room with three piles: shorts, pants, underwear.</p>
+                            <p>No wrong choices, everything matches. No digging through his closet or drawers. All the clothing he needs is visible and easy to reach.</p>
+                            <p>He likes to change often. He is still modest but trips to the mailbox in those ♥️ underwear is still a thing.</p>
+                            <p>For shoes: one pair of slip-ons and one pair of flip-flops. No laces. No belts. Both are super frustrating.</p>
+                            <p class="journal-emphasis">Simple, visible, reachable. Self reliance.</p>
+                            <div style="text-align: center; margin: 2rem 0;">
+                                <img src="https://pbs.twimg.com/media/GqtuScOWIAAiHi4?format=jpg&name=medium" 
+                                     alt="Clothing setup for Dad" 
+                                     style="max-width: 100%; height: auto; border-radius: 8px; margin: 1rem 0;"/>
+                            </div>
+                            <p class="journal-emphasis">With Alzheimer's, simplifying is not babying, it is defending their independence.</p>
+                            <p>A calm, clear, and clean environment soothes the mind.</p>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <button onclick="navigateJournal(-1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">← Previous</button>
+                            <button onclick="navigateJournal(1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">Next →</button>
+                        </div>
+                        
+                        <div class="timeline-tags">
+                            <span class="tag">Alzheimer's</span>
+                            <span class="tag">Dad</span>
+                            <span class="tag">Caregiving</span>
+                            <span class="tag">Independence</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">July 13, 2025</div>
+                            <h3>I'll Remember For You Dad</h3>
+                            <p class="timeline-preview">It's not memory loss anymore it's identity collapse...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="journal-section">
+                            <p style="font-weight: bold; font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent-gold);">Takeaway: When they ask "Who are you?", answer with reassurance: "I'm your son, you are safe."</p>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">Dad doesn't know his name.<br>
+                            Dad doesn't know what year it is.<br>
+                            Dad doesn't know where he lives.<br>
+                            Doesn't know his wife.<br>
+                            Can't tell you what day it is.</p>
+                            <p>He looks at me like a stranger…</p>
+                            <p>"Who are you?"</p>
+                            <p>I tell him calmly and a lot:</p>
+                            <p>"I'm your son, you are safe."</p>
+                            <p class="journal-emphasis">It's not memory loss anymore it's identity collapse.</p>
+                            <p>There's no recognition…there's only fear and blank stares</p>
+                            <p>Yet he's still in there.</p>
+                            <p>It's in his eyes.</p>
+                            <p>In the way he cries and says "thank you" after I remind him who he is 15x.</p>
+                            <p>In the way his body relaxes when I say….</p>
+                            <p>"You are safe and I'm not going anywhere."</p>
+                            <p class="journal-emphasis">That's a win now.</p>
+                            <p>No lucidity. No improvements coming.</p>
+                            <p>Just one moment where Dad isn't scared.</p>
+                            <p class="journal-emphasis">"I'll remember for you Dad."</p>
+                            <p>That's the job.</p>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <button onclick="navigateJournal(-1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">← Previous</button>
+                            <button onclick="navigateJournal(1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">Next →</button>
+                        </div>
+                        
+                        <div class="timeline-tags">
+                            <span class="tag">Alzheimer's</span>
+                            <span class="tag">Dad</span>
+                            <span class="tag">Caregiving</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">June 17, 2025</div>
+                            <h3>When Anger Is Actually Grief</h3>
+                            <p class="timeline-preview">He used to fly planes, build houses, dive off high boards...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="journal-section">
+                            <p style="font-weight: bold; font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent-gold);">Takeaway: When they're angry, validate the emotion not the logic. "I know you can. You're my hero."</p>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">Dad has Alzheimer's.</p>
+                            <p>He used to fly planes, build houses, dive off high boards.</p>
+                            <p>Now he screams, I can't do a damn thing!</p>
+                            <p>Here's what I've learned about caregiving when they're angry, scared, and slipping away.</p>
+                            <p>Today he is very angry...its been a hell of a day.</p>
+                            <p>When he says:</p>
+                            <p>I can fly a damn plane but I can't walk out this door!</p>
+                            <p>He's not just mad.</p>
+                            <p>He's grieving the man he was.</p>
+                            <p>The instinct to argue or explain doesn't help.</p>
+                            <p>Instead, say:</p>
+                            <p>I know you can. You always could. You're my hero.</p>
+                            <p class="journal-emphasis">Validate the emotion not the logic.</p>
+                            <p>Arguing reality makes the spiral worse and they wont ever be a breakthrough to make it better.</p>
+                            <p>Honor what they feel then shift the moment.</p>
+                            <p>He said:</p>
+                            <p>I don't have a damn thing I can do.</p>
+                            <p>I said:</p>
+                            <p>Let's go for a walk...you, me and the dog!</p>
+                            <p>Don't say: You have Alzheimer's.</p>
+                            <p>Say:</p>
+                            <p>That cloud in your head? That frustration? That's the sickness and I sure do love you, right here right now.</p>
+                            <p class="journal-emphasis">Name the enemy but keep your parent the hero.</p>
+                            <p>Sometimes he lashes out at my mom:</p>
+                            <p>She can't do anything either!</p>
+                            <p>This is projection.</p>
+                            <p>He's seeing his own loss in her.</p>
+                            <p>Don't defend, reframe:</p>
+                            <p>Mom wants to go places too. She's doing her best. We all are.</p>
+                            <p>Offer choices that preserve dignity...even small ones.</p>
+                            <p>You want to go for a ride in the car or a walk with the dog?</p>
+                            <p>They may feel trapped.</p>
+                            <p>Let them feel some control.</p>
+                            <p>Today he said:</p>
+                            <p>You don't let me do a damn thing!</p>
+                            <p>Don't get defensive:</p>
+                            <p>You built this house. You've done more than anyone I know. We're just keeping it safe now.</p>
+                            <p class="journal-emphasis">Honor the legacy. Less explaining...more anchoring in the Present and senses.</p>
+                            <p>Photos. Memories. Grandkids. Car rides. Routines.</p>
+                            <p>And sometimes… just silence and a hand on the shoulder.</p>
+                            <p>You cant fix it.</p>
+                            <p>But you can bring them to the Present.</p>
+                            <p>Here's the framework I use daily:</p>
+                            <p>-Validate feelings<br>-Avoid correcting memory<br>-Offer short-term choices<br>-Name the disease, not the person<br>-Celebrate who they were<br>-Stay calm, stay close<br>-Be Present</p>
+                            <p>You won't always get it right.</p>
+                            <p>But they feel your presence.</p>
+                            <p>Even through the fog that gets through.</p>
+                            <p class="journal-emphasis">That counts.</p>
+                        </div>
+
+                        <div class="timeline-tags">
+                            <span class="tag">Alzheimer's</span>
+                            <span class="tag">Dad</span>
+                            <span class="tag">Caregiving</span>
+                            <span class="tag">Anger</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">April 30, 2025</div>
+                            <h3>Night Terrors</h3>
+                            <p class="timeline-preview">My dad had night terrors again last night...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="journal-section">
+                            <p style="font-weight: bold; font-size: 1.4rem; color: var(--accent-gold); margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 215, 0, 0.05); border-left: 4px solid var(--accent-gold);">Takeaway: During night terrors, don't try to wake them. Stay close, speak softly, remind them they're safe.</p>
+                            <p style="font-size: 1.3rem; line-height: 1.8;">Dad Alzheimer's Update</p>
+                            <p>Dad had night terrors again last night.</p>
+                            <p>He was 9yo when he and my uncle found their father, a police officer, shot and murdered. That moment shattered his childhood and rewired his life.</p>
+                            <p>Now, 72 years later, that memory still owns the night.</p>
+                            <p>When the night terrors come, nothing wakes him. He screams and cries out like a child. With Alzheimer's, there is no exaggeration or acting it's real to him. His doctor told me, "When he's in that state, he might as well be back there again."</p>
+                            <p>And where he's going is 1953.</p>
+                            <p>He tells me the story for hours. This time it lasted from 3am to 6am. Some of the details are right, some are not. But it is his truth in that moment. I cry too.</p>
+                            <p>He talks about how hard life became after his father's murder. There were no fallen officer programs in the 1950s. No counseling. No support. You just sucked it up. His mother worked 2 jobs to raise 2 little boys on her own. That trauma never left him. It is still sharp in his mind. There are no gaps in that memory. He remembers it all.</p>
+                            <p>There is a rhythm to life with Alzheimer's, suffering followed by silence.</p>
+                            <p>Im not going anywhere.</p>
+                            <div style="text-align: center; margin: 2rem 0;">
+                                <img src="https://pbs.twimg.com/media/Gp0zu5SXoAAQEdr?format=png&name=medium" 
+                                     alt="Night terrors memory" 
+                                     style="max-width: 100%; height: auto; border-radius: 8px; margin: 1rem 0;"/>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin: 2rem 0; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <button onclick="navigateJournal(-1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">← Previous</button>
+                            <button onclick="navigateJournal(1)" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer;">Next →</button>
+                        </div>
+                        
+                        <div class="timeline-tags">
+                            <span class="tag">Alzheimer's</span>
+                            <span class="tag">Dad</span>
+                            <span class="tag">Night Terrors</span>
+                            <span class="tag">Trauma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future entries will go here -->
+                <div class="timeline-entry collapsed" onclick="toggleEntry(this)">
+                    <div class="timeline-header">
+                        <div class="timeline-header-left">
+                            <div class="timeline-date">Coming Soon</div>
+                            <h3>More Entries</h3>
+                            <p class="timeline-preview">Future journal entries will appear here...</p>
+                        </div>
+                        <span class="expand-indicator">▼</span>
+                    </div>
+                    <div class="timeline-content">
+                        <p>This space is ready for the next story.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consulting Promotion Section -->
+        <section id="consulting" style="margin: 4rem auto; padding: 3rem 2rem; max-width: 900px; background: linear-gradient(135deg, rgba(74, 158, 255, 0.05), rgba(255, 215, 0, 0.05)); border: 1px solid var(--border); border-radius: 12px;">
+            <div style="text-align: center;">
+                <h2 style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-gold);">Need Everything Fixed?</h2>
+                <p style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 1.5rem;">Introducing <a href="https://yourdoingitallwrong.com" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none; border-bottom: 2px solid var(--accent);">YoureDoingItAllWrong.com</a></p>
+                <p style="font-size: 1.4rem; color: var(--text-secondary); line-height: 1.6; max-width: 700px; margin: 0 auto 2rem;">
+                    The world's most honest consulting firm. We specialize in telling you everything you're doing wrong – because you are. 
+                    <br><br>
+                    <span style="color: var(--accent-gold); font-weight: bold; font-size: 1.5rem;">$800/hour</span> to explain why your strategy is wrong, your thinking is wrong, and probably your tie too.
+                    <br><br>
+                    <em style="font-size: 1.2rem;">"YDIAW™ 100% guarantees your wrong."</em>
+                </p>
+                <a href="https://yourdoingitallwrong.com" target="_blank" 
+                   style="display: inline-block; padding: 1rem 2.5rem; background: var(--accent); color: var(--bg-primary); 
+                          text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 1.3rem; 
+                          transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(74, 158, 255, 0.3)';"
+                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    Discover What You're Doing Wrong →
+                </a>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border); margin-top: 3rem;">
+        <p style="color: var(--text-secondary); font-size: 1.1rem; text-align: center; margin: 0 auto;">
+            <a href="https://x.com/nixfred" target="_blank" style="color: var(--accent); text-decoration: none;">@nixfred on X</a><br>
+            <span style="font-size: 0.9rem; display: block;">Documenting Dad's Alzheimer's Journey</span>
+        </p>
+    </footer>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="toggleTheme()">Theme</button>
+    </div>
+
+    <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const moonPhases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            const phase = Math.floor((now.getDate() / 30) * 8);
+            document.getElementById('clock').textContent = time;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Typewriter effect
+        const text = "This is not a story about heroism or tragedy. This is a ledger of days.";
+        let index = 0;
+        const typewriterElement = document.getElementById('typewriter-text');
+        
+        function typeWriter() {
+            if (index < text.length && typewriterElement) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.id === 'what') {
+                        setTimeout(typeWriter, 500);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = header.nextElementSibling;
+                
+                // Close other accordions
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.accordion-content').classList.remove('active');
+                    }
+                });
+                
+                // Toggle current accordion
+                item.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+
+        // Rules swiper
+        let currentRule = 0;
+        const rules = document.querySelectorAll('.rule-slide');
+        
+        function showRule(index) {
+            rules.forEach((rule, i) => {
+                rule.classList.toggle('active', i === index);
+            });
+        }
+        
+        function nextRule() {
+            currentRule = (currentRule + 1) % rules.length;
+            showRule(currentRule);
+        }
+        
+        function prevRule() {
+            currentRule = (currentRule - 1 + rules.length) % rules.length;
+            showRule(currentRule);
+        }
+
+        // Keyboard navigation for rules
+        document.addEventListener('keydown', (e) => {
+            const rulesSection = document.getElementById('rules');
+            const rect = rulesSection.getBoundingClientRect();
+            const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+            
+            if (isInView) {
+                if (e.key === 'ArrowRight') nextRule();
+                if (e.key === 'ArrowLeft') prevRule();
+            }
+        });
+
+        // Theme toggle
+        let currentTheme = 'default';
+        
+        function toggleTheme() {
+            const themes = ['default', 'silent-mode', 'terminal-mode'];
+            const body = document.body;
+            
+            // Remove current theme
+            body.classList.remove('silent-mode', 'terminal-mode');
+            
+            // Cycle to next theme
+            currentTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length];
+            
+            // Apply new theme
+            if (currentTheme !== 'default') {
+                body.classList.add(currentTheme);
+            }
+            
+            // Update button text
+            const btn = document.querySelector('.theme-btn');
+            const themeNames = {
+                'default': 'Theme',
+                'silent-mode': 'Silent',
+                'terminal-mode': 'Terminal'
+            };
+            btn.textContent = themeNames[currentTheme];
+        }
+
+
+        // Journal entry toggle
+        function toggleEntry(entry) {
+            entry.classList.toggle('collapsed');
+        }
+        
+        // Show journal entry from Memory Book
+        function showJournal(index) {
+            // Hide the journal section first
+            const journalSection = document.getElementById('journal');
+            journalSection.style.display = 'block';
+            
+            // Get all timeline entries
+            const entries = journalSection.querySelectorAll('.timeline-entry');
+            
+            // Expand the selected entry
+            if (entries[index]) {
+                // Collapse all entries first
+                entries.forEach(entry => entry.classList.add('collapsed'));
+                // Expand the selected one
+                entries[index].classList.remove('collapsed');
+                
+                // Store current index
+                window.currentJournalIndex = index;
+                
+                // Scroll to the specific entry with offset for nav bar
+                setTimeout(() => {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const entryTop = entries[index].getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({ 
+                        top: entryTop - navHeight - 20, 
+                        behavior: 'smooth' 
+                    });
+                }, 100);
+            }
+        }
+        
+        // Navigate through journal entries
+        function navigateJournal(direction) {
+            const entries = document.querySelectorAll('#journal .timeline-entry');
+            let currentIndex = window.currentJournalIndex || 0;
+            let newIndex = currentIndex + direction;
+            
+            // Wrap around
+            if (newIndex < 0) newIndex = entries.length - 1;
+            if (newIndex >= entries.length) newIndex = 0;
+            
+            showJournal(newIndex);
+        }
+
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                // Only prevent default for hash links (not external pages)
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+                // Let /network link work normally
+            });
+        });
+
+    </script>
+
+    <!-- Instagram Embed Script -->
+    <script async src="//www.instagram.com/embed.js"></script>
+    <script>
+        // Ensure Instagram embeds are processed
+        if (window.instgrm) {
+            window.instgrm.Embeds.process();
+        }
+        // Also process after a delay in case script loads later
+        setTimeout(function() {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

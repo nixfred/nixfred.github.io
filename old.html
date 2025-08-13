@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Life – Stillness Inside the Storm</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" href="profile.jpg">
+    <link rel="shortcut icon" href="profile.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #8b0000;
+            --border: #333333;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(4rem, 8vw, 7rem);
+            margin-bottom: 2rem;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: clamp(1.3rem, 2vw, 1.6rem);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Header Info */
+        .header-info {
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            z-index: 1001;
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 5rem;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            position: relative;
+        }
+
+        #hero h1 {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .hero-text {
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            margin: 0 auto;
+            text-align: center;
+            max-width: 65ch;
+            font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* What This Is Section */
+        .typewriter-container {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--text-primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Daily Practice Accordions */
+        .accordion {
+            margin: 2rem 0;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .accordion-header {
+            padding: 1.5rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            color: var(--accent);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+
+        .accordion-indicator {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-indicator {
+            transform: rotate(45deg);
+        }
+
+        /* Memory Book Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .memory-tile {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .memory-tile:hover::before {
+            left: 100%;
+        }
+
+        .memory-tile:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Journal Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-tags {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        /* Rules Swiper */
+        .rules-container {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rule-slide {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .rule-slide.active {
+            opacity: 1;
+        }
+
+        .rule-text {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-family: 'Playfair Display', Georgia, serif;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.3;
+        }
+
+        .swipe-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .swipe-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .swipe-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        textarea, input[type="email"] {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus, input[type="email"]:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .disclaimer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .theme-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* Silent Mode */
+        body.silent-mode {
+            filter: grayscale(100%) contrast(0.8);
+        }
+
+        /* Terminal Theme */
+        body.terminal-mode {
+            font-family: 'Courier New', monospace;
+        }
+
+        body.terminal-mode h1,
+        body.terminal-mode h2,
+        body.terminal-mode h3 {
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
+
+        body.terminal-mode .memory-tile,
+        body.terminal-mode .accordion-item,
+        body.terminal-mode .tag {
+            border-style: dashed;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .header-info {
+                display: none;
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#what">What This Is</a></li>
+            <li><a href="#practice">Daily Practice</a></li>
+            <li><a href="#memory">Memory Book</a></li>
+            <li><a href="#systems">Systems</a></li>
+            <li><a href="#journal">Journal</a></li>
+            <li><a href="#rules">Rules</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Info -->
+    <div class="header-info" id="clock"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <h1>Stillness Inside the Storm</h1>
+            <p class="subtitle">My name is Freddie Wright Nix Jr., but the ones who know me call me Spike.</p>
+            <p class="hero-text">There is a particular kind of silence that comes with watching someone you love disappear one memory at a time. This space holds that silence, and everything that lives within it.</p>
+        </section>
+
+        <!-- What This Is -->
+        <section id="what" class="fade-in">
+            <h2>What This Is</h2>
+            <div class="typewriter-container">
+                <p id="typewriter-text"></p>
+            </div>
+            <p class="fade-in">
+                A personal archive. A field manual. A witness to the daily practice of showing up 
+                when showing up is all you have left. No heroes here. No villains either. 
+                Just the weight of love measured in laundry loads and medication schedules.
+            </p>
+        </section>
+
+        <!-- Daily Practice -->
+        <section id="practice" class="fade-in">
+            <h2>Daily Practice</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>AI & Infrastructure</h3>
+                        <span class="accordion-indicator">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            Building systems that think so I don't have to. Automating the automatable. 
+                            Creating digital infrastructure that holds when everything else falls apart.
+                            The machines remember what we forget.
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Caregiving</h3>
+                        <span class="accordion-indicator">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            Two parents. Two different declines. One requires constant vigilance against 
+                            the fog of Alzheimer's. The other battles hoarding and the fortress of denial 
+                            it builds. Both need more than one person can give.
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>System Rebuild</h3>
+                        <span class="accordion-indicator">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>
+                            Every crisis is a system failure waiting to be fixed. Healthcare navigation. 
+                            Legal frameworks. Financial structures. Building the infrastructure that should 
+                            exist but doesn't. One line of code, one phone call, one form at a time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memory Book -->
+        <section id="memory" class="fade-in">
+            <h2>Memory Book</h2>
+            <div class="memory-grid">
+                <div class="memory-tile">
+                    <h3>The Day She Forgot My Name</h3>
+                    <p>But remembered the dog we had in 1987</p>
+                </div>
+                <div class="memory-tile">
+                    <h3>404 Errors in Human Form</h3>
+                    <p>When the neural pathways return "file not found"</p>
+                </div>
+                <div class="memory-tile">
+                    <h3>The Hoard</h3>
+                    <p>What 30 years of "might need this" looks like</p>
+                </div>
+                <div class="memory-tile">
+                    <h3>Night Shift</h3>
+                    <p>3 AM is when the real conversations happen</p>
+                </div>
+                <div class="memory-tile">
+                    <h3>The Mediator</h3>
+                    <p>Standing between two parents who forgot how to talk</p>
+                </div>
+                <div class="memory-tile">
+                    <h3>System Crash</h3>
+                    <p>When Medicare meets reality</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Systems Not Stories -->
+        <section id="systems" class="fade-in">
+            <h2>Systems Not Stories</h2>
+            <p>Field manuals for the war nobody trains you for.</p>
+            <ul style="list-style: none; margin-top: 2rem;">
+                <li style="margin-bottom: 1rem;">
+                    <a href="#" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem;">
+                        How to Interview a Memory Care Facility
+                    </a>
+                </li>
+                <li style="margin-bottom: 1rem;">
+                    <a href="#" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem;">
+                        What Hoarding Teaches You About Power
+                    </a>
+                </li>
+                <li style="margin-bottom: 1rem;">
+                    <a href="#" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem;">
+                        Why Bureaucracy is the Real Villain in Elder Care
+                    </a>
+                </li>
+                <li style="margin-bottom: 1rem;">
+                    <a href="#" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem;">
+                        The Mathematics of Medication Management
+                    </a>
+                </li>
+                <li style="margin-bottom: 1rem;">
+                    <a href="#" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem;">
+                        Building Your Own Safety Net When the System Fails
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Journal Archive -->
+        <section id="journal" class="fade-in">
+            <h2>Journal Archive</h2>
+            <div class="timeline">
+                <div class="timeline-entry">
+                    <div class="timeline-date">December 3, 2024</div>
+                    <h3>The Infrastructure of Love</h3>
+                    <p>Built another automation today. This one handles medication reminders...</p>
+                    <div class="timeline-tags">
+                        <span class="tag">AI + Tech</span>
+                        <span class="tag">Infrastructure</span>
+                    </div>
+                </div>
+                <div class="timeline-entry">
+                    <div class="timeline-date">November 28, 2024</div>
+                    <h3>Thanksgiving in Separate Rooms</h3>
+                    <p>Two parents. Two meals. Zero shared memories...</p>
+                    <div class="timeline-tags">
+                        <span class="tag">Family Conflict</span>
+                        <span class="tag">Alzheimer's</span>
+                    </div>
+                </div>
+                <div class="timeline-entry">
+                    <div class="timeline-date">November 15, 2024</div>
+                    <h3>What the Machines Know</h3>
+                    <p>The AI remembers her birthday. She doesn't...</p>
+                    <div class="timeline-tags">
+                        <span class="tag">Late Night Thoughts</span>
+                        <span class="tag">AI + Tech</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Rules I Live By -->
+        <section id="rules" class="fade-in">
+            <h2 style="text-align: center; margin-bottom: 3rem;">The Rules I Live By</h2>
+            <div class="rules-container">
+                <div class="rule-slide active">
+                    <p class="rule-text">Show up. Even when showing up is all you can do.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">The system is broken. Build your own.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">Love is measured in loads of laundry, not words.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">Document everything. Memory is the first casualty.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">You can't save everyone. Save who you can.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">Rage at the machine, then fix it.</p>
+                </div>
+                <div class="rule-slide">
+                    <p class="rule-text">Silent presence beats empty words.</p>
+                </div>
+                <div class="swipe-nav">
+                    <button class="swipe-btn" onclick="prevRule()">← Previous</button>
+                    <button class="swipe-btn" onclick="nextRule()">Next →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="fade-in">
+            <h2>Contact</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="message">What's going on in your life?</label>
+                    <textarea id="message" name="message" placeholder="Tell me what you're carrying..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Get a monthly dispatch from the front line</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com">
+                </div>
+                <button type="submit" class="submit-btn">Send</button>
+                <p class="disclaimer">
+                    Not all messages will be answered, but all are read. 
+                    Sometimes witnessing is enough.
+                </p>
+            </form>
+        </section>
+    </main>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="toggleTheme()">Theme</button>
+    </div>
+
+    <script>
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const moonPhases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            const phase = Math.floor((now.getDate() / 30) * 8);
+            document.getElementById('clock').textContent = time;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Typewriter effect
+        const text = "This is not a story about heroism or tragedy. This is a ledger of days.";
+        let index = 0;
+        const typewriterElement = document.getElementById('typewriter-text');
+        
+        function typeWriter() {
+            if (index < text.length && typewriterElement) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.id === 'what') {
+                        setTimeout(typeWriter, 500);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const content = header.nextElementSibling;
+                
+                // Close other accordions
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.accordion-content').classList.remove('active');
+                    }
+                });
+                
+                // Toggle current accordion
+                item.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+
+        // Rules swiper
+        let currentRule = 0;
+        const rules = document.querySelectorAll('.rule-slide');
+        
+        function showRule(index) {
+            rules.forEach((rule, i) => {
+                rule.classList.toggle('active', i === index);
+            });
+        }
+        
+        function nextRule() {
+            currentRule = (currentRule + 1) % rules.length;
+            showRule(currentRule);
+        }
+        
+        function prevRule() {
+            currentRule = (currentRule - 1 + rules.length) % rules.length;
+            showRule(currentRule);
+        }
+
+        // Keyboard navigation for rules
+        document.addEventListener('keydown', (e) => {
+            const rulesSection = document.getElementById('rules');
+            const rect = rulesSection.getBoundingClientRect();
+            const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+            
+            if (isInView) {
+                if (e.key === 'ArrowRight') nextRule();
+                if (e.key === 'ArrowLeft') prevRule();
+            }
+        });
+
+        // Theme toggle
+        let currentTheme = 'default';
+        
+        function toggleTheme() {
+            const themes = ['default', 'silent-mode', 'terminal-mode'];
+            const body = document.body;
+            
+            // Remove current theme
+            body.classList.remove('silent-mode', 'terminal-mode');
+            
+            // Cycle to next theme
+            currentTheme = themes[(themes.indexOf(currentTheme) + 1) % themes.length];
+            
+            // Apply new theme
+            if (currentTheme !== 'default') {
+                body.classList.add(currentTheme);
+            }
+            
+            // Update button text
+            const btn = document.querySelector('.theme-btn');
+            const themeNames = {
+                'default': 'Theme',
+                'silent-mode': 'Silent',
+                'terminal-mode': 'Terminal'
+            };
+            btn.textContent = themeNames[currentTheme];
+        }
+
+        // Memory tiles - add click handlers
+        document.querySelectorAll('.memory-tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                // In a real implementation, this would open a modal or expand the content
+                console.log('Opening memory:', tile.querySelector('h3').textContent);
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = document.getElementById('message').value;
+            const email = document.getElementById('email').value;
+            
+            // In a real implementation, this would send the data to a server
+            console.log('Form submitted:', { message, email });
+            
+            // Clear form
+            e.target.reset();
+            
+            // Show confirmation (you could add a proper notification here)
+            const btn = document.querySelector('.submit-btn');
+            btn.textContent = 'Received';
+            setTimeout(() => {
+                btn.textContent = 'Send';
+            }, 2000);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add hover effect for words in hero text
+        const heroText = document.querySelector('.hero-text');
+        if (heroText) {
+            const words = heroText.textContent.split(' ');
+            heroText.innerHTML = words.map(word => 
+                `<span style="display: inline-block; transition: opacity 0.3s ease;">${word}</span>`
+            ).join(' ');
+            
+            heroText.querySelectorAll('span').forEach((span, i) => {
+                span.style.animationDelay = `${0.6 + i * 0.05}s`;
+                span.style.opacity = '0';
+                span.style.animation = 'fadeInUp 0.5s ease forwards';
+            });
+        }
+    </script>
+    
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 3rem;">
+        <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; text-align: center; margin: 0 auto;">
+            <a href="https://x.com/nixfred" target="_blank" style="color: #4a9eff; text-decoration: none;">@nixfred on X</a><br>
+            <span style="font-size: 0.9rem; display: block;">Fred Nix · Spike · Documenting Dad's Alzheimer's Journey</span>
+        </p>
+    </footer>
+</body>
+</html>

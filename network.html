@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nixfred.com - Network Operations Center</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" href="profile.jpg">
+    <link rel="shortcut icon" href="profile.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid #4CAF50;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            opacity: 0.7;
+            margin-top: auto;
+        }
+        
+        a {
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        a:hover {
+            border-bottom-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 nixfred.com</h1>
+            <p class="tagline">Network Operations Center</p>
+        </header>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🔒</div>
+                <h2>Tailscale VPN</h2>
+                <p>Secure mesh network connecting all nodes</p>
+                <div class="status">● Connected</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h2>Tailscale DNS</h2>
+                <p>MagicDNS for all network devices</p>
+                <div class="status">● Active</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🖥️</div>
+                <h2>Network Hosts</h2>
+                <p>6 nodes in the nixfred network</p>
+                <div class="status">● Online</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h2>Future Services</h2>
+                <p>Ready to add new capabilities</p>
+                <div class="status">● Standing by</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🐳</div>
+                <h2>Docker Services</h2>
+                <p>Containerized infrastructure on pi</p>
+                <div class="status">● Healthy</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">☁️</div>
+                <h2>CloudFlare Tunnel</h2>
+                <p>Secure external access to services</p>
+                <div class="status">● Connected</div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🔥</div>
+                <h2><a href="/old" style="color: inherit; text-decoration: none;">Spike</a></h2>
+                <p>The Fire and the Stillness - Personal site</p>
+                <div class="status">● <a href="/old" style="color: inherit;">Click to view</a></div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h2><a href="/" style="color: inherit; text-decoration: none;">My Life</a></h2>
+                <p>Stillness Inside the Storm - Field manual for caregiving</p>
+                <div class="status">● <a href="/" style="color: inherit;">Enter</a></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>nixfred.com internal network | Powered by NIXNET on pi</p>
+            <hr style="margin: 2rem 0; border: none; border-top: 1px solid #444;">
+            <p style="text-align: center; margin: 0 auto;">
+                <a href="https://x.com/nixfred" target="_blank" style="color: #4a9eff; text-decoration: none;">@nixfred on X</a><br>
+                <span style="font-size: 0.9rem; display: block;">Fred Nix · Spike · Documenting Dad's Alzheimer's Journey</span>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

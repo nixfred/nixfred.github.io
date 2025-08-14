@@ -1,22 +1,24 @@
 # nixfred.com Website
 
-**This repository IS the live website** - [nixfred.com](https://nixfred.com) is served directly from these files via GitHub Pages.
+**This repository IS the live website** - [nixfred.com](https://nixfred.com) and [nixnet.me](https://nixnet.me) are served directly from these files via GitHub Pages.
 
 ## Overview
 
-This repository is the actual nixfred.com website:
+This repository is the actual nixfred.com and nixnet.me website:
 - **These HTML files ARE the website** - no separate codebase or build process
 - Hosted directly from this repo via GitHub Pages at nixfred.github.io
-- Domain nixfred.com configured in Cloudflare to point to GitHub Pages
+- Domains nixfred.com and nixnet.me configured in Cloudflare to point to GitHub Pages
 - Edited and managed through Claude Code for instant updates
 - Changes pushed to main branch go live automatically within minutes
 
 ## How It Works
 
 1. **Direct GitHub Pages Hosting**: These HTML/CSS/JS files are served AS-IS from this repository
-2. **Cloudflare DNS**: nixfred.com domain has CNAME record pointing to nixfred.github.io
+2. **Cloudflare DNS**: Both domains have CNAME records pointing to nixfred.github.io
+   - nixfred.com → nixfred.github.io
+   - nixnet.me → nixfred.github.io
 3. **Claude Code Editing**: Connected directly to this repo for live website editing
-4. **Instant Deployment**: Push to main = live on nixfred.com (no build, no deploy, just git push)
+4. **Instant Deployment**: Push to main = live on both domains (no build, no deploy, just git push)
 
 ## Updating the Website
 
@@ -25,18 +27,18 @@ Claude Code is connected to this repository and directly edits the live website:
 - Edit any HTML/CSS/JavaScript file = editing the actual website
 - Use `webpush` or `pushweb` command to publish changes
 - Claude commits and pushes all changes to GitHub
-- Website updates live on nixfred.com within 2-3 minutes
+- Website updates live on both nixfred.com and nixnet.me within 2-3 minutes
 
 ### Manual Updates
 1. Clone this repository (you're cloning the actual website)
 2. Edit the HTML/CSS/JavaScript files (you're editing the website directly)
 3. Commit and push to main branch
-4. That's it - your changes are live on nixfred.com
+4. That's it - your changes are live on both domains
 
 ## Website Files (These ARE the Website)
 
-- `index.html` - The actual homepage you see at nixfred.com
-- `network.html` - Network page at nixfred.com/network.html
+- `index.html` - The actual homepage you see at both domains
+- `network.html` - Network page at /network.html
 - `profile.jpg` - Profile image used on the site
 - `favicon.ico`, `favicon-16.png`, `favicon-32.png` - Site icons
 - `CLAUDE.md` - Instructions for Claude Code when editing this website
@@ -50,11 +52,13 @@ Claude Code is connected to this repository and directly edits the live website:
 
 ## Domain Configuration
 
-How nixfred.com serves this repository:
-- Cloudflare DNS has CNAME record: nixfred.com → nixfred.github.io
+How both domains serve this repository:
+- Cloudflare DNS CNAME records:
+  - nixfred.com → nixfred.github.io
+  - nixnet.me → nixfred.github.io
 - GitHub Pages serves this repository at nixfred.github.io
-- SSL certificate automatically provided by GitHub Pages
-- Result: These files = Live website at nixfred.com
+- SSL certificates automatically provided by GitHub Pages for both domains
+- Result: These files = Live website at both nixfred.com and nixnet.me
 
 ## Quick Deploy
 
@@ -67,4 +71,4 @@ git commit -m "Update website"
 git push origin main
 ```
 
-Changes go live at [nixfred.com](https://nixfred.com) in ~2 minutes. No build, no CI/CD, just git push = website updated.
+Changes go live at both [nixfred.com](https://nixfred.com) and [nixnet.me](https://nixnet.me) in ~2 minutes. No build, no CI/CD, just git push = website updated.

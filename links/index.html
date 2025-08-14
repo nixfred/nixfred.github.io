@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIXFRED // WEB LINKS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #00ffcc;
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 204, 0.03) 2px,
+                    rgba(0, 255, 204, 0.03) 4px
+                ),
+                radial-gradient(ellipse at center, rgba(0, 255, 204, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.5), transparent);
+            animation: scan 8s linear infinite;
+            z-index: 2;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 3;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            color: #00ffcc;
+            text-shadow: 
+                0 0 10px #00ffcc,
+                0 0 20px #00ffcc,
+                0 0 30px #00ffcc,
+                0 0 40px #00ff88;
+            margin-bottom: 0.5rem;
+            animation: glitch 2s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ff88; }
+            25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff, 0 0 10px #00ffcc, 0 0 20px #00ffcc; }
+            50% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff, 0 0 10px #00ffcc, 0 0 20px #00ffcc; }
+            75% { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ff88; }
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #00ff88;
+            letter-spacing: 0.5em;
+            opacity: 0.8;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .link-card {
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffcc, #00ff88, #00ffcc, #00ff88);
+            border-radius: 8px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            animation: rotate 3s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .link-card:hover::before {
+            opacity: 1;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 204, 0.3),
+                inset 0 1px 0 rgba(0, 255, 204, 0.3);
+        }
+        
+        .link-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .link-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00ffcc;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .link-url {
+            font-size: 0.9rem;
+            color: #00ff88;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        
+        .link-description {
+            font-size: 0.85rem;
+            color: rgba(0, 255, 204, 0.6);
+            line-height: 1.4;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff88; }
+            50% { opacity: 0.5; box-shadow: 0 0 20px #00ff88; }
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: #00ffcc;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 255, 204, 0.2);
+            color: rgba(0, 255, 204, 0.5);
+            font-size: 0.85rem;
+        }
+        
+        .cyber-text {
+            display: inline-block;
+            animation: flicker 3s infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 0.8; }
+            93% { opacity: 1; }
+            95% { opacity: 0.7; }
+            96% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scan-line"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="cyber-text">NIXFRED</h1>
+            <div class="subtitle">[ WEB LINKS DIRECTORY ]</div>
+        </header>
+        
+        <section>
+            <h2 class="section-title">Main Sites</h2>
+            <div class="links-grid">
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://nixfred.com" target="_blank">
+                        <div class="link-title">NixFred</div>
+                        <div class="link-url">nixfred.com</div>
+                        <div class="link-description">Main portfolio and personal site</div>
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://skywalrus.net" target="_blank">
+                        <div class="link-title">Skywalrus</div>
+                        <div class="link-url">skywalrus.net</div>
+                        <div class="link-description">Cloud architecture and DevOps projects</div>
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://nixnet.me" target="_blank">
+                        <div class="link-title">NixNet</div>
+                        <div class="link-url">nixnet.me</div>
+                        <div class="link-description">Network infrastructure and tools</div>
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://yourdoingitallwrong.com" target="_blank">
+                        <div class="link-title">YDIAW</div>
+                        <div class="link-url">yourdoingitallwrong.com</div>
+                        <div class="link-description">Tech insights and tutorials</div>
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://ydiaw.com" target="_blank">
+                        <div class="link-title">YDIAW Short</div>
+                        <div class="link-url">ydiaw.com</div>
+                        <div class="link-description">Quick links and resources</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title">GitHub Pages</h2>
+            <div class="links-grid">
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://nixfred.github.io" target="_blank">
+                        <div class="link-title">GitHub Portfolio</div>
+                        <div class="link-url">nixfred.github.io</div>
+                        <div class="link-description">GitHub Pages main site</div>
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="status-indicator"></div>
+                    <a href="https://nixfred.github.io/aipod-docs" target="_blank">
+                        <div class="link-title">AI Pod Docs</div>
+                        <div class="link-url">nixfred.github.io/aipod-docs</div>
+                        <div class="link-description">AI Pod project documentation</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="cyber-text">
+                &copy; 2025 NIXFRED // ALL SYSTEMS OPERATIONAL
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

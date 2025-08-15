@@ -109,10 +109,53 @@
         a:hover {
             border-bottom-color: #ffffff;
         }
+        
+        /* Navigation bar */
+        nav {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        nav a:hover {
+            color: #ffffff;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#caregiving">Caregiving</a></li>
+                <li><a href="/#photos">Photos & Video</a></li>
+                <li><a href="/links/">Links</a></li>
+                <li><a href="/network.html">Network</a></li>
+                <li><a href="https://nixfred.com/network-security-hunter/">Security Hunter</a></li>
+            </ul>
+        </nav>
+        
         <header>
             <h1>🌐 nixfred.com</h1>
             <p class="tagline">Network Operations Center</p>

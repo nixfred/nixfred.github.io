@@ -119,18 +119,7 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            cursor: move;
-        }
-        
-        .link-card.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-        
-        .link-card.drag-over {
-            background: rgba(0, 255, 204, 0.2);
-            border-color: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            cursor: pointer;
         }
         
         .link-card::before {
@@ -260,7 +249,7 @@
         <section>
             <h2 class="section-title">Main Sites</h2>
             <div class="links-grid">
-                <div class="link-card" draggable="true" data-id="nixfred-main">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://nixfred.com" target="_blank">
                         <div class="link-title">NixFred</div>
@@ -269,7 +258,7 @@
                     </a>
                 </div>
                 
-                <div class="link-card" draggable="true" data-id="skywalrus">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://skywalrus.net" target="_blank">
                         <div class="link-title">Skywalrus</div>
@@ -278,7 +267,7 @@
                     </a>
                 </div>
                 
-                <div class="link-card" draggable="true" data-id="nixnet">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://nixfred.com/network.html" target="_blank">
                         <div class="link-title">NixNet</div>
@@ -287,7 +276,7 @@
                     </a>
                 </div>
                 
-                <div class="link-card" draggable="true" data-id="ydiaw">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://youredoingitallwrong.com" target="_blank">
                         <div class="link-title">YDIAW</div>
@@ -296,7 +285,7 @@
                     </a>
                 </div>
                 
-                <div class="link-card" draggable="true" data-id="security-hunter">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://nixfred.com/network-security-hunter/" target="_blank">
                         <div class="link-title">Network Security Hunter</div>
@@ -310,7 +299,7 @@
         <section>
             <h2 class="section-title">GitHub</h2>
             <div class="links-grid">
-                <div class="link-card" draggable="true" data-id="github">
+                <div class="link-card">
                     <div class="status-indicator"></div>
                     <a href="https://github.com/nixfred" target="_blank">
                         <div class="link-title">GitHub Portfolio</div>
@@ -327,201 +316,5 @@
             </div>
         </footer>
     </div>
-    
-    <script>
-        // Drag and Drop functionality with localStorage
-        let draggedElement = null;
-        let draggedFrom = null;
-        
-        // Initialize drag and drop for all sections
-        function initDragAndDrop() {
-            const sections = document.querySelectorAll('.links-grid');
-            
-            sections.forEach(section => {
-                const cards = section.querySelectorAll('.link-card');
-                
-                cards.forEach(card => {
-                    // Prevent link clicks from interfering with drag
-                    card.addEventListener('dragstart', handleDragStart);
-                    card.addEventListener('dragend', handleDragEnd);
-                    card.addEventListener('dragover', handleDragOver);
-                    card.addEventListener('drop', handleDrop);
-                    card.addEventListener('dragenter', handleDragEnter);
-                    card.addEventListener('dragleave', handleDragLeave);
-                });
-            });
-            
-            // Load saved positions
-            loadSavedPositions();
-        }
-        
-        function handleDragStart(e) {
-            draggedElement = this;
-            draggedFrom = this.parentElement;
-            this.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', this.innerHTML);
-            
-            // Prevent link navigation during drag
-            const link = this.querySelector('a');
-            if (link) {
-                link.style.pointerEvents = 'none';
-            }
-        }
-        
-        function handleDragEnd(e) {
-            this.classList.remove('dragging');
-            
-            // Re-enable link navigation
-            const link = this.querySelector('a');
-            if (link) {
-                link.style.pointerEvents = '';
-            }
-            
-            // Clear all drag-over states
-            document.querySelectorAll('.link-card').forEach(card => {
-                card.classList.remove('drag-over');
-            });
-            
-            // Save the new positions
-            savePositions();
-        }
-        
-        function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            e.dataTransfer.dropEffect = 'move';
-            return false;
-        }
-        
-        function handleDragEnter(e) {
-            if (this !== draggedElement) {
-                this.classList.add('drag-over');
-            }
-        }
-        
-        function handleDragLeave(e) {
-            this.classList.remove('drag-over');
-        }
-        
-        function handleDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            
-            if (draggedElement !== this) {
-                const targetParent = this.parentElement;
-                const draggedClone = draggedElement.cloneNode(true);
-                const targetClone = this.cloneNode(true);
-                
-                // Replace target with dragged element
-                targetParent.replaceChild(draggedClone, this);
-                
-                // Replace dragged element with target
-                draggedFrom.replaceChild(targetClone, draggedElement);
-                
-                // Reinitialize event listeners on new elements
-                initDragAndDrop();
-            }
-            
-            return false;
-        }
-        
-        function savePositions() {
-            const sections = ['main-sites', 'github-section'];
-            const positions = {};
-            
-            sections.forEach(sectionName => {
-                const section = document.querySelector(`[data-section="${sectionName}"]`);
-                if (section) {
-                    const cards = section.querySelectorAll('.link-card');
-                    positions[sectionName] = Array.from(cards).map(card => card.dataset.id);
-                }
-            });
-            
-            // For now, save all cards in order regardless of section
-            const allCards = document.querySelectorAll('.link-card');
-            const allPositions = Array.from(allCards).map(card => card.dataset.id);
-            
-            localStorage.setItem('linkCardPositions', JSON.stringify(allPositions));
-        }
-        
-        function loadSavedPositions() {
-            const saved = localStorage.getItem('linkCardPositions');
-            if (!saved) return;
-            
-            try {
-                const positions = JSON.parse(saved);
-                const allCards = Array.from(document.querySelectorAll('.link-card'));
-                const cardMap = {};
-                
-                // Create a map of card IDs to elements
-                allCards.forEach(card => {
-                    if (card.dataset.id) {
-                        cardMap[card.dataset.id] = card;
-                    }
-                });
-                
-                // Get the first grid container
-                const firstGrid = document.querySelector('.links-grid');
-                if (!firstGrid) return;
-                
-                // Clear and reorder based on saved positions
-                positions.forEach(id => {
-                    if (cardMap[id] && cardMap[id].parentElement) {
-                        const card = cardMap[id];
-                        const parent = card.parentElement;
-                        parent.appendChild(card);
-                    }
-                });
-            } catch (e) {
-                console.error('Error loading saved positions:', e);
-            }
-        }
-        
-        // Add reset button
-        function addResetButton() {
-            const nav = document.querySelector('nav');
-            if (nav) {
-                const resetBtn = document.createElement('button');
-                resetBtn.textContent = 'Reset Order';
-                resetBtn.style.cssText = `
-                    margin-left: 2rem;
-                    padding: 0.5rem 1rem;
-                    background: transparent;
-                    border: 1px solid #00ffcc;
-                    color: #00ffcc;
-                    cursor: pointer;
-                    font-family: inherit;
-                    font-size: 0.8rem;
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    transition: all 0.3s ease;
-                `;
-                resetBtn.onmouseover = () => {
-                    resetBtn.style.background = '#00ffcc';
-                    resetBtn.style.color = '#000';
-                };
-                resetBtn.onmouseout = () => {
-                    resetBtn.style.background = 'transparent';
-                    resetBtn.style.color = '#00ffcc';
-                };
-                resetBtn.onclick = () => {
-                    if (confirm('Reset all cards to their original positions?')) {
-                        localStorage.removeItem('linkCardPositions');
-                        location.reload();
-                    }
-                };
-                nav.appendChild(resetBtn);
-            }
-        }
-        
-        // Initialize when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            initDragAndDrop();
-            addResetButton();
-        });
-    </script>
 </body>
 </html>

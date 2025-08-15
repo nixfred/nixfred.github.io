@@ -329,158 +329,169 @@
     </div>
     
     <script>
-        // Drag and Drop functionality with localStorage
+        // Improved Drag and Drop with proper reordering and localStorage
         let draggedElement = null;
-        let draggedFrom = null;
         
-        // Initialize drag and drop for all sections
         function initDragAndDrop() {
-            const sections = document.querySelectorAll('.links-grid');
+            // Load saved order first
+            loadSavedOrder();
             
-            sections.forEach(section => {
-                const cards = section.querySelectorAll('.link-card');
-                
-                cards.forEach(card => {
-                    // Prevent link clicks from interfering with drag
-                    card.addEventListener('dragstart', handleDragStart);
-                    card.addEventListener('dragend', handleDragEnd);
-                    card.addEventListener('dragover', handleDragOver);
-                    card.addEventListener('drop', handleDrop);
-                    card.addEventListener('dragenter', handleDragEnter);
-                    card.addEventListener('dragleave', handleDragLeave);
-                });
+            // Setup drag and drop for all cards
+            const cards = document.querySelectorAll('.link-card');
+            const grids = document.querySelectorAll('.links-grid');
+            
+            cards.forEach(card => {
+                card.addEventListener('dragstart', handleDragStart, false);
+                card.addEventListener('dragend', handleDragEnd, false);
             });
             
-            // Load saved positions
-            loadSavedPositions();
+            grids.forEach(grid => {
+                grid.addEventListener('dragover', handleDragOver, false);
+                grid.addEventListener('drop', handleDrop, false);
+            });
         }
         
         function handleDragStart(e) {
             draggedElement = this;
-            draggedFrom = this.parentElement;
             this.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
             e.dataTransfer.setData('text/html', this.innerHTML);
             
-            // Prevent link navigation during drag
+            // Prevent link clicks during drag
             const link = this.querySelector('a');
             if (link) {
-                link.style.pointerEvents = 'none';
+                link.onclick = (e) => e.preventDefault();
             }
         }
         
         function handleDragEnd(e) {
+            // Clean up
             this.classList.remove('dragging');
             
-            // Re-enable link navigation
+            // Re-enable links
             const link = this.querySelector('a');
             if (link) {
-                link.style.pointerEvents = '';
+                link.onclick = null;
             }
             
-            // Clear all drag-over states
+            // Remove all drag-over effects
             document.querySelectorAll('.link-card').forEach(card => {
                 card.classList.remove('drag-over');
             });
             
-            // Save the new positions
-            savePositions();
+            // Save the new order
+            saveOrder();
+            
+            draggedElement = null;
         }
         
         function handleDragOver(e) {
             if (e.preventDefault) {
                 e.preventDefault();
             }
+            
             e.dataTransfer.dropEffect = 'move';
-            return false;
-        }
-        
-        function handleDragEnter(e) {
-            if (this !== draggedElement) {
-                this.classList.add('drag-over');
+            
+            const afterElement = getDragAfterElement(e.currentTarget, e.clientY, e.clientX);
+            
+            if (afterElement == null) {
+                // Append to end
+                e.currentTarget.appendChild(draggedElement);
+            } else {
+                // Insert before the element
+                e.currentTarget.insertBefore(draggedElement, afterElement);
             }
-        }
-        
-        function handleDragLeave(e) {
-            this.classList.remove('drag-over');
+            
+            return false;
         }
         
         function handleDrop(e) {
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-            
-            if (draggedElement !== this) {
-                const targetParent = this.parentElement;
-                const draggedClone = draggedElement.cloneNode(true);
-                const targetClone = this.cloneNode(true);
-                
-                // Replace target with dragged element
-                targetParent.replaceChild(draggedClone, this);
-                
-                // Replace dragged element with target
-                draggedFrom.replaceChild(targetClone, draggedElement);
-                
-                // Reinitialize event listeners on new elements
-                initDragAndDrop();
-            }
-            
             return false;
         }
         
-        function savePositions() {
-            const sections = ['main-sites', 'github-section'];
-            const positions = {};
+        function getDragAfterElement(container, y, x) {
+            const draggableElements = [...container.querySelectorAll('.link-card:not(.dragging)')];
             
-            sections.forEach(sectionName => {
-                const section = document.querySelector(`[data-section="${sectionName}"]`);
-                if (section) {
-                    const cards = section.querySelectorAll('.link-card');
-                    positions[sectionName] = Array.from(cards).map(card => card.dataset.id);
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offsetY = y - box.top - box.height / 2;
+                const offsetX = x - box.left - box.width / 2;
+                
+                // For grid layout, consider both X and Y positions
+                const offset = Math.sqrt(offsetY * offsetY + offsetX * offsetX);
+                
+                if (offsetY < 0 && offsetY > (closest.offset ?? Number.NEGATIVE_INFINITY)) {
+                    return { offset: offsetY, element: child };
+                } else {
+                    return closest;
                 }
-            });
-            
-            // For now, save all cards in order regardless of section
-            const allCards = document.querySelectorAll('.link-card');
-            const allPositions = Array.from(allCards).map(card => card.dataset.id);
-            
-            localStorage.setItem('linkCardPositions', JSON.stringify(allPositions));
+            }, {}).element;
         }
         
-        function loadSavedPositions() {
-            const saved = localStorage.getItem('linkCardPositions');
+        function saveOrder() {
+            const mainGrid = document.querySelector('.links-grid');
+            const githubGrid = document.querySelectorAll('.links-grid')[1];
+            
+            const order = {
+                main: [],
+                github: []
+            };
+            
+            if (mainGrid) {
+                order.main = [...mainGrid.querySelectorAll('.link-card')].map(card => card.dataset.id);
+            }
+            
+            if (githubGrid) {
+                order.github = [...githubGrid.querySelectorAll('.link-card')].map(card => card.dataset.id);
+            }
+            
+            localStorage.setItem('linkCardOrder', JSON.stringify(order));
+        }
+        
+        function loadSavedOrder() {
+            const saved = localStorage.getItem('linkCardOrder');
             if (!saved) return;
             
             try {
-                const positions = JSON.parse(saved);
-                const allCards = Array.from(document.querySelectorAll('.link-card'));
-                const cardMap = {};
+                const order = JSON.parse(saved);
+                const cardMap = new Map();
                 
-                // Create a map of card IDs to elements
-                allCards.forEach(card => {
+                // Build a map of all cards
+                document.querySelectorAll('.link-card').forEach(card => {
                     if (card.dataset.id) {
-                        cardMap[card.dataset.id] = card;
+                        cardMap.set(card.dataset.id, card);
                     }
                 });
                 
-                // Get the first grid container
-                const firstGrid = document.querySelector('.links-grid');
-                if (!firstGrid) return;
+                // Reorder main section
+                const mainGrid = document.querySelector('.links-grid');
+                if (mainGrid && order.main) {
+                    order.main.forEach(id => {
+                        const card = cardMap.get(id);
+                        if (card && card.parentElement === mainGrid) {
+                            mainGrid.appendChild(card);
+                        }
+                    });
+                }
                 
-                // Clear and reorder based on saved positions
-                positions.forEach(id => {
-                    if (cardMap[id] && cardMap[id].parentElement) {
-                        const card = cardMap[id];
-                        const parent = card.parentElement;
-                        parent.appendChild(card);
-                    }
-                });
+                // Reorder github section
+                const githubGrid = document.querySelectorAll('.links-grid')[1];
+                if (githubGrid && order.github) {
+                    order.github.forEach(id => {
+                        const card = cardMap.get(id);
+                        if (card && card.parentElement === githubGrid) {
+                            githubGrid.appendChild(card);
+                        }
+                    });
+                }
             } catch (e) {
-                console.error('Error loading saved positions:', e);
+                console.error('Error loading saved order:', e);
             }
         }
         
-        // Add reset button
         function addResetButton() {
             const nav = document.querySelector('nav');
             if (nav) {
@@ -509,7 +520,7 @@
                 };
                 resetBtn.onclick = () => {
                     if (confirm('Reset all cards to their original positions?')) {
-                        localStorage.removeItem('linkCardPositions');
+                        localStorage.removeItem('linkCardOrder');
                         location.reload();
                     }
                 };
@@ -517,7 +528,7 @@
             }
         }
         
-        // Initialize when DOM is ready
+        // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             initDragAndDrop();
             addResetButton();
